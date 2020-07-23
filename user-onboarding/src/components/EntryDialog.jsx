@@ -18,6 +18,9 @@ import RegistrationData from '../RegistrationData';
 const emptyErrors = {}; // having a specific empty object makes for
                         // easier logical operations
 
+// We validate the password with a specialized component that is
+// better quality than the one built into yup. The checkbox is very
+// simple and validates itself
 const validationSchema = yup.object().shape({
   name: yup
     .string()
@@ -28,6 +31,8 @@ const validationSchema = yup.object().shape({
     .required("Required")
 });
 
+// The dialog always exists, it just changes between visible and
+// invisible depending on whether or not it is open.
 export default function EntryDialog (props) {
   const {isOpen, setIsOpen, addRegistationData} = props,
         emptyValue = {name: '',
@@ -45,6 +50,7 @@ export default function EntryDialog (props) {
         setValidationErrors(emptyErrors);
       })
       .catch((error) => {
+        // build an object with any error messages for each field
         const errors = {};
         error.inner.forEach((error) => errors[error.path] = error.message);
         setValidationErrors(errors);
@@ -56,20 +62,26 @@ export default function EntryDialog (props) {
     setEntryValue(emptyValue);
   }
 
+  // process TOS Checkbox
   function processCheck(event) {
     setEntryValue({...entryValue, tosChecked: event.target.checked});
   }
 
+  // Process text fields
   function processInput(field, event) {
     setEntryValue({...entryValue, [field]: event.target.value});
   }
 
+  // process strength analysis results from password strength bar component
   function processScore(score) {
     // must be at least 3 to validate
     setEntryValue({...entryValue, passwordScore: score});
   }
 
+  // process submit button
   function submit() {
+    // creating an instance strips properties that aren't relevant to
+    // storage
     const registationData = new RegistrationData(entryValue);
 
     async function _submit() {
@@ -87,16 +99,20 @@ export default function EntryDialog (props) {
       }
 
     }
+    // start POST request then close dialog
     _submit();
     onClose();
   }
 
+  // called by the submit button to determine if it should enable itself
   function validate() {
     return entryValue.tosChecked &&
       entryValue.passwordScore >= 3 &&
       validationErrors === emptyErrors;
   }
 
+  // all labels check validation and adjust their text for any
+  // validation errors
   return (
     <Dialog open={isOpen} onClose={onClose} >
       <DialogTitle>{'User information'}</DialogTitle>
