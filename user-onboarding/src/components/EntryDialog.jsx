@@ -55,7 +55,7 @@ export default function EntryDialog (props) {
 
   return (
     <Dialog open={isOpen} onClose={onClose} >
-      <DialogTitle>{'New user registration'}</DialogTitle>
+      <DialogTitle>{'User information'}</DialogTitle>
       <DialogContent>
         <TextField autoFocus
                    label='Name'
