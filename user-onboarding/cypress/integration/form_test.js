@@ -48,4 +48,20 @@ describe('TOS can be checked', function () {
   });
 });
 
+describe("A valid from can be submitted", function() {
+  describe('Name takes input', function () {
+    //Arrange
+    it('Visits a new site', function() {
+      // Act
+      cy.visit("");
+      cy.get("[data-cy=addButton]").click();
+      cy.get("#name-field").type(name);
+      cy.get("#email-field").type(email);
+      cy.get("#password-field").type(password);
+      cy.get("#tos-checkbox").click();
+      cy.get("#submit-button").click();
+    });
+  });
+});
+
 //  LocalWords:  nameField addButton cy

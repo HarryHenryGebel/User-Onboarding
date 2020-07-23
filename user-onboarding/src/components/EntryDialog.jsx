@@ -133,7 +133,6 @@ export default function EntryDialog (props) {
         <FormControlLabel
           control={<Checkbox checked={entryValue.tosChecked}
                              color="primary"
-                             data-cy="tosCheckbox"
                              id="tos-checkbox"
                              onChange={
                                (event) => processCheck(event)}
@@ -147,7 +146,7 @@ export default function EntryDialog (props) {
         <Button onClick={onClose}>
           Cancel
         </Button>
-        <Button disabled={!validate()} onClick={submit} >
+        <Button id="submit-button" disabled={!validate()} onClick={submit} >
           Submit
         </Button>
       </DialogActions>
