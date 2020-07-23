@@ -22,7 +22,7 @@ export default function Topbar (props) {
                          setIsOpen={setIsDialogOpen}
                          addRegistationData={addRegistationData}/>
             <Typography variant="h6">
-              Vogon Personel Database New User Registration
+              Vogon Personnel Database New User Registration
             </Typography>
           </Toolbar>
     </AppBar>
