@@ -41,11 +41,16 @@ export default function EntryDialog (props) {
   }
 
   function processScore(score) {
+    // must be at least 3 to validate
     setEntryValue({...entryValue, passwordScore: score});
   }
 
   function submit() {
     onClose();
+  }
+
+  function validate() {
+    return entryValue.tosChecked && entryValue.passwordScore >= 3;
   }
 
   return (
@@ -66,7 +71,9 @@ export default function EntryDialog (props) {
                    type='email'
                    value={entryValue.email}/>
         <Divider orientation='vertical' flexItem />
-        <TextField label='Password'
+        <TextField label={entryValue.passwordScore >= 3 ?
+                          'Password' :
+                          'Password (Too weak)'}
                    margin='normal'
                    onChange={(event) => processInput('password', event)}
                    required
@@ -81,14 +88,16 @@ export default function EntryDialog (props) {
                              onChange={
                                (event) => processCheck(event)}
                              name="tosChecked" />}
-          label="I have read the Terms of Service.ppp"/>
-        <Typography />
+          label="I have read the Terms of Service."/>
+        {!entryValue.tosChecked ?
+         (<Typography color="secondary">Resistance is useless.</Typography>)
+         : <Typography>Glad to be of service.</Typography>}
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>
           Cancel
         </Button>
-        <Button onClick={submit} >
+        <Button disabled={!validate()} onClick={submit} >
           Submit
         </Button>
       </DialogActions>
@@ -96,4 +105,4 @@ export default function EntryDialog (props) {
   );
 }
 
-//  LocalWords:  TeamMember
+//  LocalWords:  TeamMember tosChecked
