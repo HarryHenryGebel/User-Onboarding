@@ -11,6 +11,7 @@
     "easier-requests": "0.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-password-strength-bar": "^0.3.2",
     "react-scripts": "3.4.1",
     "yup": "^0.29.1"
   },
