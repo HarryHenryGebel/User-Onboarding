@@ -22,7 +22,7 @@ export default function EntryDialog (props) {
         emptyValue = {name: '',
                       email: '',
                       password: '',
-                      passwordScore: '',
+                      passwordScore: 0,
                       tosChecked: false},
         [entryValue, setEntryValue] = useState(emptyValue),
         [tosChecked, setTOSChecked] = useState(false);
@@ -33,12 +33,15 @@ export default function EntryDialog (props) {
   }
 
   function processCheck(event) {
-    debugger;
     setEntryValue({...entryValue, tosChecked: event.target.checked});
   }
 
   function processInput(field, event) {
     setEntryValue({...entryValue, [field]: event.target.value});
+  }
+
+  function processScore(score) {
+    setEntryValue({...entryValue, passwordScore: score});
   }
 
   function submit() {
@@ -70,7 +73,7 @@ export default function EntryDialog (props) {
                    type='password'
                    value={entryValue.password}/>
         <PasswordStrengthBar password={entryValue.password}
-                             onChange={processCheck}/>
+                             onChangeScore={processScore}/>
         <Divider orientation='vertical' flexItem />
         <FormControlLabel
           control={<Checkbox checked={entryValue.tosChecked}
