@@ -14,6 +14,9 @@ import { Button,
          Typography} from '@material-ui/core';
 import * as yup from 'yup';
 import PasswordStrengthBar from 'react-password-strength-bar';
+import requester from 'easier-requests';
+
+import RegistrationData from '../RegistrationData';
 
 const roles =['Lead', 'Designer', 'Front End', 'Back End'];
 const emptyErrors = {}; // having a specific empty object makes for
@@ -73,7 +76,23 @@ export default function EntryDialog (props) {
   }
 
   function submit() {
-    onClose();
+    // onClose();
+    const registationData = new RegistrationData(entryValue);
+
+    async function _submit() {
+      try {
+        const id = requester.createUniqueID();
+        await requester.post('https://reqres.in/api/users',
+                             id,
+                             registationData);
+        const response = requester.response(id);
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+
+    }
+    _submit();
   }
 
   function validate() {
@@ -135,4 +154,4 @@ export default function EntryDialog (props) {
   );
 }
 
-//  LocalWords:  TeamMember tosChecked
+//  LocalWords:  TeamMember tosChecked RegistrationData
