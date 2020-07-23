@@ -28,7 +28,8 @@ export default function App() {
       <Paper style={{height: "100vh"}}>
         <Topbar addRegistationData={addRegistationData}/>
         {(registationData ? registationData.map(
-          (registation) => <RegistrationCard registation={registation}/>) :
+          (registation) => <RegistrationCard key={requester.createUniqueID()}
+                                             registation={registation}/>) :
           null)}
       </Paper>
     </ThemeProvider>

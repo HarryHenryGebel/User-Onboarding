@@ -21,7 +21,9 @@ export default function Topbar (props) {
             <EntryDialog isOpen={isDialogOpen}
                          setIsOpen={setIsDialogOpen}
                          addRegistationData={addRegistationData}/>
-            <Typography variant="h6">New User Registration</Typography>
+            <Typography variant="h6">
+              Vogon Personel Database New User Registration
+            </Typography>
           </Toolbar>
     </AppBar>
   );
