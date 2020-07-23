@@ -16,6 +16,8 @@ import * as yup from 'yup';
 import PasswordStrengthBar from 'react-password-strength-bar';
 
 const roles =['Lead', 'Designer', 'Front End', 'Back End'];
+const emptyErrors = {}; // having a specific empty object makes for
+                        // easier logical operations
 
 const validationSchema = yup.object().shape({
   name: yup
@@ -42,8 +44,8 @@ export default function EntryDialog (props) {
   useEffect(() => {
     validationSchema.validate(entryValue, {abortEarly: false})
       .then((response) => {
-        if (validationErrors)
-          setValidationErrors({});
+        if (validationErrors) // don't trigger a rerender for no reason
+          setValidationErrors(emptyErrors);
       })
       .catch((error) => {
         const errors = {};
@@ -75,7 +77,9 @@ export default function EntryDialog (props) {
   }
 
   function validate() {
-    return entryValue.tosChecked && entryValue.passwordScore >= 3;
+    return entryValue.tosChecked &&
+      entryValue.passwordScore >= 3 &&
+      validationErrors === emptyErrors;
   }
 
   return (
