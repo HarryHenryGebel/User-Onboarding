@@ -5,13 +5,15 @@ import './App.css';
 import 'fontsource-roboto';
 
 import Topbar from './components/Topbar';
-// import MembersDisplay from './MembersDisplay';
+import requester from 'easier-requests';
 
 const darkTheme = createMuiTheme({
   palette: {
     type: 'dark',
   },
 });
+
+requester.setOptions({throwOnFailure: true});
 
 export default function App() {
   const [teamMembers, setTeamMembers] = useState([]);
