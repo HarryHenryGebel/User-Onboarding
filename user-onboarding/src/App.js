@@ -5,6 +5,7 @@ import './App.css';
 import 'fontsource-roboto';
 
 import Topbar from './components/Topbar';
+import RegistrationCard from './components/RegistrationCard';
 import requester from 'easier-requests';
 
 const darkTheme = createMuiTheme({
@@ -26,6 +27,9 @@ export default function App() {
     <ThemeProvider theme={darkTheme}>
       <Paper style={{height: "100vh"}}>
         <Topbar addRegistationData={addRegistationData}/>
+        {(registationData ? registationData.map(
+          (registation) => <RegistrationCard registation={registation}/>) :
+          null)}
       </Paper>
     </ThemeProvider>
   );
