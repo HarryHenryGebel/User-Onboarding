@@ -1,8 +1,8 @@
 export default class RegistrationData {
-  constructor(name, email, password, tosAccepted) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.tosAccepted = tosAccepted;
+  constructor(source) {
+    this.name = source.name;
+    this.email = source.email;
+    this.password = source.password;
+    this.tosAccepted = source.tosAccepted;
   }
 }
