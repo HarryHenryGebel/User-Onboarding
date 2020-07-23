@@ -14,6 +14,8 @@ const darkTheme = createMuiTheme({
   },
 });
 
+// Throw an error if POST fails so we can use try catch instead of
+// checking for response value
 requester.setOptions({throwOnFailure: true});
 
 export default function App() {
