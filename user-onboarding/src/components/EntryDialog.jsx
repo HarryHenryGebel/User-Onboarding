@@ -38,7 +38,7 @@ export default function EntryDialog (props) {
         [entryValue, setEntryValue] = useState(emptyValue),
         [validationErrors, setValidationErrors] = useState({});
 
-  // Ei! Liewer Gott Im Himmel!
+  // Ei! Liewer Gott Im Himmel! Completely unnecessary asynchronicity!
   useEffect(() => {
     validationSchema.validate(entryValue, {abortEarly: false})
       .then((response) => {

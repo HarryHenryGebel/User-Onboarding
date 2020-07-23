@@ -36,4 +36,4 @@ export default function App() {
   );
 }
 
-//  LocalWords:  Topbar MembersDisplay roboto
+//  LocalWords:  Topbar MembersDisplay roboto RegistrationCard
