@@ -33,7 +33,7 @@ const validationSchema = yup.object().shape({
 });
 
 export default function EntryDialog (props) {
-  const {isOpen, setIsOpen} = props,
+  const {isOpen, setIsOpen, addRegistationData} = props,
         emptyValue = {name: '',
                       email: '',
                       password: '',
@@ -76,7 +76,6 @@ export default function EntryDialog (props) {
   }
 
   function submit() {
-    // onClose();
     const registationData = new RegistrationData(entryValue);
 
     async function _submit() {
@@ -87,6 +86,7 @@ export default function EntryDialog (props) {
                              registationData);
         const response = requester.response(id).data;
         const finalData = new RegistrationData(response);
+        addRegistationData(finalData);
       } catch (error) {
         console.log(error);
         throw error;

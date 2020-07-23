@@ -8,7 +8,8 @@ import AddIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import EntryDialog from './EntryDialog';
 
 export default function Topbar (props) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false),
+        {addRegistationData} = props;
 
 
   return(
@@ -18,7 +19,8 @@ export default function Topbar (props) {
               <AddIcon/>
             </IconButton>
             <EntryDialog isOpen={isDialogOpen}
-                         setIsOpen={setIsDialogOpen}/>
+                         setIsOpen={setIsDialogOpen}
+                         addRegistationData={addRegistationData}/>
             <Typography variant="h6">New User Registration</Typography>
           </Toolbar>
     </AppBar>

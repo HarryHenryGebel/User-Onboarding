@@ -16,16 +16,16 @@ const darkTheme = createMuiTheme({
 requester.setOptions({throwOnFailure: true});
 
 export default function App() {
-  const [teamMembers, setTeamMembers] = useState([]);
+  const [registationData, setRegistationData] = useState([]);
 
-  // function addTeamMember(newMember) {
-  //   setTeamMembers([...teamMembers, newMember]);
-  // }
+  function addRegistationData(newData) {
+    setRegistationData([...registationData, newData]);
+  }
 
   return (
     <ThemeProvider theme={darkTheme}>
       <Paper style={{height: "100vh"}}>
-        <Topbar />
+        <Topbar addRegistationData={addRegistationData}/>
       </Paper>
     </ThemeProvider>
   );
