@@ -10,13 +10,20 @@ import { Button,
          InputLabel,
          MenuItem,
          Select,
-         TextField } from '@material-ui/core';
+         TextField,
+         Typography} from '@material-ui/core';
+import Yup from 'yup';
+import PasswordStrengthBar from 'react-password-strength-bar';
 
 const roles =['Lead', 'Designer', 'Front End', 'Back End'];
 
 export default function EntryDialog (props) {
   const {isOpen, setIsOpen} = props,
-        emptyValue = {name: '', email: '', password: '', tosChecked: false},
+        emptyValue = {name: '',
+                      email: '',
+                      password: '',
+                      passwordScore: '',
+                      tosChecked: false},
         [entryValue, setEntryValue] = useState(emptyValue),
         [tosChecked, setTOSChecked] = useState(false);
 
@@ -25,8 +32,12 @@ export default function EntryDialog (props) {
     setEntryValue(emptyValue);
   }
 
-  function processInput(field, event) {
+  function processCheck(event) {
     debugger;
+    setEntryValue({...entryValue, tosChecked: event.target.checked});
+  }
+
+  function processInput(field, event) {
     setEntryValue({...entryValue, [field]: event.target.value});
   }
 
@@ -58,13 +69,17 @@ export default function EntryDialog (props) {
                    required
                    type='password'
                    value={entryValue.password}/>
+        <PasswordStrengthBar password={entryValue.password}
+                             onChange={processCheck}/>
         <Divider orientation='vertical' flexItem />
         <FormControlLabel
           control={<Checkbox checked={entryValue.tosChecked}
+                             color="primary"
                              onChange={
-                               (event) => processInput('tosChecked', event)}
+                               (event) => processCheck(event)}
                              name="tosChecked" />}
-        label="I have read the Terms of Service.ppp"/>
+          label="I have read the Terms of Service.ppp"/>
+        <Typography />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>
