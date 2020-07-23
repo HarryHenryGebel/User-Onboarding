@@ -7,9 +7,6 @@ import { Button,
          DialogTitle,
          Divider,
          FormControlLabel,
-         InputLabel,
-         MenuItem,
-         Select,
          TextField,
          Typography} from '@material-ui/core';
 import * as yup from 'yup';
@@ -18,7 +15,6 @@ import requester from 'easier-requests';
 
 import RegistrationData from '../RegistrationData';
 
-const roles =['Lead', 'Designer', 'Front End', 'Back End'];
 const emptyErrors = {}; // having a specific empty object makes for
                         // easier logical operations
 
@@ -40,15 +36,13 @@ export default function EntryDialog (props) {
                       passwordScore: 0,
                       tosChecked: false},
         [entryValue, setEntryValue] = useState(emptyValue),
-        [tosChecked, setTOSChecked] = useState(false),
         [validationErrors, setValidationErrors] = useState({});
 
   // Ei! Liewer Gott Im Himmel!
   useEffect(() => {
     validationSchema.validate(entryValue, {abortEarly: false})
       .then((response) => {
-        if (validationErrors) // don't trigger a rerender for no reason
-          setValidationErrors(emptyErrors);
+        setValidationErrors(emptyErrors);
       })
       .catch((error) => {
         const errors = {};
