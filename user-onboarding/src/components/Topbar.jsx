@@ -11,7 +11,7 @@ export default function Topbar (props) {
   const [isDialogOpen, setIsDialogOpen] = useState(false),
         {addRegistationData} = props;
 
-
+  // Clicking on the AddIcon opens the EntryDialog
   return(
     <AppBar position="sticky">
           <Toolbar>
@@ -29,4 +29,4 @@ export default function Topbar (props) {
   );
 }
 
-//  LocalWords:  AddCircleOutlineOutlined EntryDialog
+//  LocalWords:  AddCircleOutlineOutlined EntryDialog AddIcon
