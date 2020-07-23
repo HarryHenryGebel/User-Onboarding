@@ -19,7 +19,7 @@ export default function Topbar (props) {
             </IconButton>
             <EntryDialog isOpen={isDialogOpen}
                          setIsOpen={setIsDialogOpen}/>
-            <Typography variant="h6">Team Members</Typography>
+            <Typography variant="h6">New User Registration</Typography>
           </Toolbar>
     </AppBar>
   );
