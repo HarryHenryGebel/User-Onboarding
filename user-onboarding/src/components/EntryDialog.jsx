@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button,
          Checkbox,
          Dialog,
@@ -12,10 +12,20 @@ import { Button,
          Select,
          TextField,
          Typography} from '@material-ui/core';
-import Yup from 'yup';
+import * as yup from 'yup';
 import PasswordStrengthBar from 'react-password-strength-bar';
 
 const roles =['Lead', 'Designer', 'Front End', 'Back End'];
+
+const validationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required('Required'),
+  email: yup
+    .string()
+    .email("Must be a valid email address")
+    .required("Required")
+});
 
 export default function EntryDialog (props) {
   const {isOpen, setIsOpen} = props,
@@ -25,7 +35,22 @@ export default function EntryDialog (props) {
                       passwordScore: 0,
                       tosChecked: false},
         [entryValue, setEntryValue] = useState(emptyValue),
-        [tosChecked, setTOSChecked] = useState(false);
+        [tosChecked, setTOSChecked] = useState(false),
+        [validationErrors, setValidationErrors] = useState({});
+
+  // Ei! Liewer Gott Im Himmel!
+  useEffect(() => {
+    validationSchema.validate(entryValue, {abortEarly: false})
+      .then((response) => {
+        if (validationErrors)
+          setValidationErrors({});
+      })
+      .catch((error) => {
+        const errors = {};
+        error.inner.forEach((error) => errors[error.path] = error.message);
+        setValidationErrors(errors);
+      });
+  }, [entryValue]);
 
   function onClose() {
     setIsOpen(false);
@@ -58,16 +83,18 @@ export default function EntryDialog (props) {
       <DialogTitle>{'User information'}</DialogTitle>
       <DialogContent>
         <TextField autoFocus
-                   label='Name'
+                   label={"name" in validationErrors ?
+                          `Name (${validationErrors.name})` :
+                          'Name'}
                    margin='normal'
                    onChange={(event) => processInput('name', event)}
-                   required
                    value={entryValue.name}/>
         <Divider orientation='vertical' flexItem />
-        <TextField label='Email address'
+        <TextField label={"email" in validationErrors ?
+                          `Email (${validationErrors.email})` :
+                          'Email'}
                    margin='normal'
                    onChange={(event) => processInput('email', event)}
-                   required
                    type='email'
                    value={entryValue.email}/>
         <Divider orientation='vertical' flexItem />
@@ -76,7 +103,6 @@ export default function EntryDialog (props) {
                           'Password (Too weak)'}
                    margin='normal'
                    onChange={(event) => processInput('password', event)}
-                   required
                    type='password'
                    value={entryValue.password}/>
         <PasswordStrengthBar password={entryValue.password}
