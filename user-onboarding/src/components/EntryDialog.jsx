@@ -85,7 +85,8 @@ export default function EntryDialog (props) {
         await requester.post('https://reqres.in/api/users',
                              id,
                              registationData);
-        const response = requester.response(id);
+        const response = requester.response(id).data;
+        const finalData = new RegistrationData(response);
       } catch (error) {
         console.log(error);
         throw error;
@@ -93,6 +94,7 @@ export default function EntryDialog (props) {
 
     }
     _submit();
+    onClose();
   }
 
   function validate() {
