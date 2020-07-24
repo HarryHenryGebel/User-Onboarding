@@ -1,15 +1,26 @@
-const name = "Harry Henry Gebel",
-      email = "hhgebel@gmail.com",
+const defaultUserName = "Harry Henry Gebel",
+      defaultEmail = "hhgebel@gmail.com",
       goodPassword = "u4Q7q9yja",
       badPassword = "u4Q7q9yj";
 
-function fillEverything(password = goodPassword) {
+function fillEverything(variances = {}) {
+  const userName = "userName" in variances ?
+        variances.userName :
+        defaultUserName,
+        email = "email" in variances ? variances.email : defaultEmail,
+        password = "password" in variances ? variances.password : goodPassword,
+        checkTOS = "checkTOS" in variances ? variances.checkTOS : true;
+  console.log(userName, email, password, checkTOS);
   cy.visit("");
   cy.get("[data-cy=addButton]").click();
-  cy.get("#name-field").type(name);
-  cy.get("#email-field").type(email);
-  cy.get("#password-field").type(password);
-  cy.get("#tos-checkbox").click();
+  if (userName)
+    cy.get("#name-field").type(userName);
+  if (email)
+    cy.get("#email-field").type(email);
+  if (password)
+    cy.get("#password-field").type(password);
+  if (checkTOS)
+    cy.get("#tos-checkbox").click();
 }
 
 describe('Name takes input', function () {
@@ -18,8 +29,8 @@ describe('Name takes input', function () {
     // Act
     cy.visit("");
     cy.get("[data-cy=addButton]").click();
-    cy.get("#name-field").type(name);
-    cy.get("#name-field").should("have.value", name);
+    cy.get("#name-field").type(defaultUserName);
+    cy.get("#name-field").should("have.value", defaultUserName);
   });
 });
 
@@ -29,8 +40,8 @@ describe('Email takes input', function () {
     // Act
     cy.visit("");
     cy.get("[data-cy=addButton]").click();
-    cy.get("#email-field").type(email);
-    cy.get("#email-field").should("have.value", email);
+    cy.get("#email-field").type(defaultEmail);
+    cy.get("#email-field").should("have.value", defaultEmail);
   });
 });
 
@@ -57,7 +68,7 @@ describe('TOS can be checked', function () {
   });
 });
 
-describe("A valid from can be submitted", function() {
+describe("A valid form can be submitted", function() {
   //Arrange
   it('Visits a new site', function() {
     // Act
@@ -66,13 +77,58 @@ describe("A valid from can be submitted", function() {
   });
 });
 
-describe("A valid from can be submitted", function() {
+describe("Insufficient password prevents submission", function() { //
   //Arrange
   it('Visits a new site', function() {
     // Act
-    fillEverything(badPassword);
+    fillEverything({password: badPassword});
     cy.get("#submit-button").should('be.disabled');
   });
 });
 
-//  LocalWords:  nameField addButton cy
+describe("No name prevents submission", function() { //
+  //Arrange
+  it('Visits a new site', function() {
+    // Act
+    fillEverything({userName: ""});
+    cy.get("#submit-button").should('be.disabled');
+  });
+});
+
+describe("No email prevents submission", function() { //
+  //Arrange
+  it('Visits a new site', function() {
+    // Act
+    fillEverything({email: ""});
+    cy.get("#submit-button").should('be.disabled');
+  });
+});
+
+describe("No email domain prevents submission", function() { //
+  //Arrange
+  it('Visits a new site', function() {
+    // Act
+    fillEverything({email: "hhgebelgmail.com"});
+    cy.get("#submit-button").should('be.disabled');
+  });
+});
+
+describe("Invalid email domain prevents submission", function() { //
+  //Arrange
+  it('Visits a new site', function() {
+    // Act
+    fillEverything({email: "hhgebel@gmailcom"});
+    cy.get("#submit-button").should('be.disabled');
+  });
+});
+
+describe("Failure to accept TOS prevents submission", function() { //
+  //Arrange
+  it('Visits a new site', function() {
+    // Act
+    fillEverything({checkTOS: false});
+    cy.get("#submit-button").should('be.disabled');
+  });
+});
+
+//  LocalWords: addButton cy
