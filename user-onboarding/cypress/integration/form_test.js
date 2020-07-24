@@ -1,7 +1,16 @@
 const name = "Harry Henry Gebel",
       email = "hhgebel@gmail.com",
-      password = "u4Q7q9yja4*";
+      goodPassword = "u4Q7q9yja",
+      badPassword = "u4Q7q9yj";
 
+function fillEverything(password = goodPassword) {
+  cy.visit("");
+  cy.get("[data-cy=addButton]").click();
+  cy.get("#name-field").type(name);
+  cy.get("#email-field").type(email);
+  cy.get("#password-field").type(password);
+  cy.get("#tos-checkbox").click();
+}
 
 describe('Name takes input', function () {
   //Arrange
@@ -31,8 +40,8 @@ describe('Password takes input', function () {
     // Act
     cy.visit("");
     cy.get("[data-cy=addButton]").click();
-    cy.get("#password-field").type(password);
-    cy.get("#password-field").should("have.value", password);
+    cy.get("#password-field").type(goodPassword);
+    cy.get("#password-field").should("have.value", goodPassword);
   });
 });
 
@@ -44,23 +53,25 @@ describe('TOS can be checked', function () {
     cy.get("[data-cy=addButton]").click();
     cy.get("#tos-checkbox").click();
     cy.get("#tos-checkbox").should("to.be.checked");
-//    cy.get("#password-field").should("have.value", password);
+    //    cy.get("#password-field").should("have.value", password);
   });
 });
 
 describe("A valid from can be submitted", function() {
-  describe('Name takes input', function () {
-    //Arrange
-    it('Visits a new site', function() {
-      // Act
-      cy.visit("");
-      cy.get("[data-cy=addButton]").click();
-      cy.get("#name-field").type(name);
-      cy.get("#email-field").type(email);
-      cy.get("#password-field").type(password);
-      cy.get("#tos-checkbox").click();
-      cy.get("#submit-button").click();
-    });
+  //Arrange
+  it('Visits a new site', function() {
+    // Act
+    fillEverything();
+    cy.get("#submit-button").click();
+  });
+});
+
+describe("A valid from can be submitted", function() {
+  //Arrange
+  it('Visits a new site', function() {
+    // Act
+    fillEverything(badPassword);
+    cy.get("#submit-button").should('be.disabled');
   });
 });
 
