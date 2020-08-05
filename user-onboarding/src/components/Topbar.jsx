@@ -15,7 +15,8 @@ export default function Topbar (props) {
   return(
     <AppBar position="sticky">
           <Toolbar>
-            <IconButton onClick={() => setIsDialogOpen(true)}>
+            <IconButton data-cy="addButton"
+                        onClick={() => setIsDialogOpen(true)}>
               <AddIcon/>
             </IconButton>
             <EntryDialog isOpen={isDialogOpen}

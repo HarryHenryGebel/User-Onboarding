@@ -118,6 +118,7 @@ export default function EntryDialog (props) {
       <DialogTitle>{'User information'}</DialogTitle>
       <DialogContent>
         <TextField autoFocus
+                   id="name-field"
                    label={"name" in validationErrors ?
                           `Name (${validationErrors.name})` :
                           'Name'}
@@ -125,7 +126,8 @@ export default function EntryDialog (props) {
                    onChange={(event) => processInput('name', event)}
                    value={entryValue.name}/>
         <Divider orientation='vertical' flexItem />
-        <TextField label={"email" in validationErrors ?
+        <TextField id="email-field"
+                   label={"email" in validationErrors ?
                           `Email (${validationErrors.email})` :
                           'Email'}
                    margin='normal'
@@ -133,7 +135,8 @@ export default function EntryDialog (props) {
                    type='email'
                    value={entryValue.email}/>
         <Divider orientation='vertical' flexItem />
-        <TextField label={entryValue.passwordScore >= 3 ?
+        <TextField id="password-field"
+                   label={entryValue.passwordScore >= 3 ?
                           'Password' :
                           'Password (Too weak)'}
                    margin='normal'
@@ -146,6 +149,7 @@ export default function EntryDialog (props) {
         <FormControlLabel
           control={<Checkbox checked={entryValue.tosChecked}
                              color="primary"
+                             id="tos-checkbox"
                              onChange={
                                (event) => processCheck(event)}
                              name="tosChecked" />}
@@ -158,7 +162,7 @@ export default function EntryDialog (props) {
         <Button onClick={onClose}>
           Cancel
         </Button>
-        <Button disabled={!validate()} onClick={submit} >
+        <Button id="submit-button" disabled={!validate()} onClick={submit} >
           Submit
         </Button>
       </DialogActions>
@@ -166,4 +170,4 @@ export default function EntryDialog (props) {
   );
 }
 
-//  LocalWords:  TeamMember tosChecked RegistrationData
+//  LocalWords:  TeamMember tosChecked RegistrationData nameField
